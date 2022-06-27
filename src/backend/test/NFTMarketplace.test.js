@@ -1,5 +1,5 @@
 const { expect } = require("chai"); 
-
+const { ethers } = require("hardhat")
 const toWei = (num) => ethers.utils.parseEther(num.toString())
 const fromWei = (num) => ethers.utils.formatEther(num)
 
@@ -163,5 +163,6 @@ describe("NFTMarketplace", function () {
         marketplace.connect(addr3).purchaseItem(1, {value: totalPriceInWei})
       ).to.be.revertedWith("item already sold");
     });
+    
   })
 })

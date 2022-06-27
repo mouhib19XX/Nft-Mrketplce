@@ -2,23 +2,33 @@ import {
   BrowserRouter,
   Routes,
   Route
-} from "react-router-dom";
-import Navigation from './Navbar';
-import Home from './Home.js'
-import Create from './Create.js'
-import MyListedItems from './MyListedItems.js'
-import MyPurchases from './MyPurchases.js'
+} from "react-router-dom"
+import React from "react"
+import Navigation from './Navbar'
+import Home from './Home.jsx'
+import Create from './Create.jsx'
+import MyListedItems from './MyListedItems.jsx'
+import MyPurchases from './MyPurchases.jsx'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
 import MarketplaceAddress from '../contractsData/Marketplace-address.json'
+import Footer from "./Footer.jsx"
+import Contact from './Contact'
 import NFTAbi from '../contractsData/NFT.json'
 import NFTAddress from '../contractsData/NFT-address.json'
 import { useState } from 'react'
 import { ethers } from "ethers"
 import { Spinner } from 'react-bootstrap'
+import axios from 'axios'
+
 
 import './App.css';
+import About from "./about";
 
 function App() {
+ 
+
+  
+  
   const [loading, setLoading] = useState(true)
   const [account, setAccount] = useState(null)
   const [nft, setNFT] = useState({})
@@ -26,12 +36,13 @@ function App() {
   // MetaMask Login/Connect
   const web3Handler = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    
     setAccount(accounts[0])
     // Get provider from Metamask
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     // Set signer
     const signer = provider.getSigner()
-
+   
     window.ethereum.on('chainChanged', (chainId) => {
       window.location.reload();
     })
@@ -52,19 +63,26 @@ function App() {
   }
 
   return (
+    
     <BrowserRouter>
-      <div className="App">
-        <>
+      <div className="App" >
+
+        <div/>
           <Navigation web3Handler={web3Handler} account={account} />
-        </>
+        <div/>
         <div>
+       <div>
+</div>
           {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-              <Spinner animation="border" style={{ display: 'flex' }} />
-              <p className='mx-3 my-0'>Awaiting Metamask Connection...</p>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+              <Spinner animation="border" style={{ display: 'flex', color: 'white'}} />
+              <p className='mx-3 my-0' style={{ color: 'white' }}><h3>Awaiting wallet Connection...</h3></p>
             </div>
+            
           ) : (
+            
             <Routes>
+              
               <Route path="/" element={
                 <Home marketplace={marketplace} nft={nft} />
               } />
@@ -77,10 +95,23 @@ function App() {
               <Route path="/my-purchases" element={
                 <MyPurchases marketplace={marketplace} nft={nft} account={account} />
               } />
+               <Route path="About" element={
+                <About marketplace={marketplace} nft={nft} account={account} />
+              } />
+               <Route path="Contact" element={
+                <Contact marketplace={marketplace} nft={nft} account={account} />
+              } />
             </Routes>
           )}
         </div>
-      </div>
+        
+   
+        <div class="container">
+
+  <div >
+    <Footer/>
+  </div>
+</div></div>
     </BrowserRouter>
 
   );

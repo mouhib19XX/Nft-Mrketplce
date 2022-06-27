@@ -39,7 +39,7 @@ export default function MyPurchases({ marketplace, nft, account }) {
   }, [])
   if (loading) return (
     <main style={{ padding: "1rem 0" }}>
-      <h2>Loading...</h2>
+      <h2 style={{ color: 'white'}}>Loading...</h2>
     </main>
   )
   return (
@@ -59,7 +59,7 @@ export default function MyPurchases({ marketplace, nft, account }) {
         </div>
         : (
           <main style={{ padding: "1rem 0" }}>
-            <h2>No purchases</h2>
+            <h2 style={{ color: 'white'}}>No purchases</h2>
           </main>
         )}
     </div>
